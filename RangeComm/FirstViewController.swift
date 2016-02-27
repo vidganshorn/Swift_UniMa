@@ -63,9 +63,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
                 pin!.canShowCallout = true
                 
                 // Resize image
-                let pinImage = UIImage(named: "fanti.png")
+                let pinImage = UIImage(named: "panda.png")
                 
-                let size = CGSize(width: 25, height: 25)
+                let size = CGSize(width: 40, height: 40)
                 UIGraphicsBeginImageContext(size)
                 
                 pinImage!.drawInRect(CGRectMake(0, 0, size.width, size.height))

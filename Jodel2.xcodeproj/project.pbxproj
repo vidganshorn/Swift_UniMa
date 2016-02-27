@@ -47,8 +47,7 @@
 		95969CA01BFDF9A7005BF328 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 95969C9F1BFDF9A7005BF328 /* libsqlite3.tbd */; };
 		95969CA21BFDF9AF005BF328 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95969CA11BFDF9AF005BF328 /* Accounts.framework */; };
 		95969CA41BFDF9B6005BF328 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95969CA31BFDF9B6005BF328 /* Social.framework */; };
-		95C12BE91C80992B008E4534 /* jodel.png in Resources */ = {isa = PBXBuildFile; fileRef = 95C12BE81C80992B008E4534 /* jodel.png */; };
-		95C12BEB1C809C0A008E4534 /* fanti.png in Resources */ = {isa = PBXBuildFile; fileRef = 95C12BEA1C809C0A008E4534 /* fanti.png */; };
+		95B863021C8216D500E4326B /* panda.png in Resources */ = {isa = PBXBuildFile; fileRef = 95B863011C8216D500E4326B /* panda.png */; };
 		95FF07341C7E529900A721FF /* MapJodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FF07331C7E529900A721FF /* MapJodel.swift */; };
 /* End PBXBuildFile section */
 
@@ -116,8 +115,7 @@
 		95969C9F1BFDF9A7005BF328 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		95969CA11BFDF9AF005BF328 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		95969CA31BFDF9B6005BF328 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		95C12BE81C80992B008E4534 /* jodel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jodel.png; sourceTree = "<group>"; };
-		95C12BEA1C809C0A008E4534 /* fanti.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fanti.png; sourceTree = "<group>"; };
+		95B863011C8216D500E4326B /* panda.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = panda.png; sourceTree = "<group>"; };
 		95FF07331C7E529900A721FF /* MapJodel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapJodel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -241,10 +239,9 @@
 			isa = PBXGroup;
 			children = (
 				95664FE51C08970B0062F473 /* comment.png */,
-				95C12BE81C80992B008E4534 /* jodel.png */,
 				95664FE91C08B0DA0062F473 /* location.png */,
 				957BBFA11C1437F60031092B /* writeComment.png */,
-				95C12BEA1C809C0A008E4534 /* fanti.png */,
+				95B863011C8216D500E4326B /* panda.png */,
 				95664FED1C08C51B0062F473 /* news_feed_1x.png */,
 				95664FEE1C08C51B0062F473 /* news_feed_2x.png */,
 				95664FEB1C08C4ED0062F473 /* news_feed_3x.png */,
@@ -360,16 +357,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95B863021C8216D500E4326B /* panda.png in Resources */,
 				194DAAEA1BE0E78B00D82C7D /* LaunchScreen.storyboard in Resources */,
 				95664FEA1C08B0DA0062F473 /* location.png in Resources */,
 				95664FEF1C08C51B0062F473 /* news_feed_1x.png in Resources */,
 				95664FE81C08974B0062F473 /* like.png in Resources */,
 				95664FF61C08C5860062F473 /* map_3x.png in Resources */,
 				95664FF41C08C5860062F473 /* map_1x.png in Resources */,
-				95C12BEB1C809C0A008E4534 /* fanti.png in Resources */,
 				95664FEC1C08C4ED0062F473 /* news_feed_3x.png in Resources */,
 				95664FF01C08C51B0062F473 /* news_feed_2x.png in Resources */,
-				95C12BE91C80992B008E4534 /* jodel.png in Resources */,
 				95664FF51C08C5860062F473 /* map_2x.png in Resources */,
 				194DAAE71BE0E78B00D82C7D /* Assets.xcassets in Resources */,
 				194DAAE51BE0E78B00D82C7D /* Main.storyboard in Resources */,
