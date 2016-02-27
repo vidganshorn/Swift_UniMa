@@ -13,7 +13,6 @@ import MapKit
 import Parse
 import Bolts
 
-
 class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     let locationManager = CLLocationManager()
