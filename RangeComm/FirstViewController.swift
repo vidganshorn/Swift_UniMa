@@ -21,8 +21,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     @IBOutlet weak var mapView: MKMapView!
     
     var messages = [PFObject]()
-    
-
 
     override func viewDidLoad()
     {
