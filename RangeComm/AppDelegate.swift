@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var sts = [String] ()
     
+    var mpcManager: MPCManager!
+    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // [Optional] Power your app with Local Datastore. For more info, go to
@@ -31,6 +33,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // [Optional] Track statistics around application opens.
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+        
+        // self.window?.tintColor = UIColor.orangeColor()
+        
+        mpcManager = MPCManager()
         
         
         // Override point for customization after application launch.

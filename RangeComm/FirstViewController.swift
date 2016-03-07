@@ -76,7 +76,17 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
                 pin?.image = resizedImage
                 
                 let rightButton: AnyObject! = UIButton(type: UIButtonType.DetailDisclosure)
-                pin?.rightCalloutAccessoryView = rightButton as? UIView
+                // pin?.rightCalloutAccessoryView = rightButton as? UIView
+                
+                let deleteButton = UIButton(type: UIButtonType.Custom) as UIButton
+                deleteButton.frame.size.width = 30
+                deleteButton.frame.size.height = 30
+                // deleteButton.backgroundColor = UIColor.blueColor()
+                deleteButton.setImage(UIImage(named: "chat"), forState: .Normal)
+                
+                pin!.rightCalloutAccessoryView = deleteButton
+                
+                // return pinAnnotationView
         }
 
         
@@ -97,7 +107,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
         let location = locations.last
         
         let center = CLLocationCoordinate2D(latitude: location!.coordinate.latitude, longitude: location!.coordinate.longitude)
-        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.09, longitudeDelta: 0.09))
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.075, longitudeDelta: 0.075))
         
         self.mapView.setRegion(region, animated: true)
         
