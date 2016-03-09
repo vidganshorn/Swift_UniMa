@@ -36,6 +36,8 @@ class CommentTableView: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("Comment view: " + messageID)
+        
         getComments()
         
         self.refreshControl?.addTarget(self, action: "reloadComments:", forControlEvents: UIControlEvents.ValueChanged)

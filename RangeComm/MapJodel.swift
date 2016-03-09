@@ -15,16 +15,17 @@ class MapText: NSObject, MKAnnotation {
     let title: String?
     let time: String?
     let color: String
+    let username: String?
     let coordinate: CLLocationCoordinate2D
     // let icon: UIImage
     
-    init(title: String, time: String, color: String, coordinate: CLLocationCoordinate2D) {
+    init(title: String, time: String, color: String, username: String, coordinate: CLLocationCoordinate2D) {
        
         self.title = title
         self.time = time
         self.color = color
         self.coordinate = coordinate
-        // self.icon = icon
+        self.username = username
         
         super.init()
     }

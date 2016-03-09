@@ -18,6 +18,8 @@ class Message {
     
     var text: String?
     
+    var username: String?
+    
     // var location: PFGeoPoint?
     var longitude: Double?
     var latitude: Double?

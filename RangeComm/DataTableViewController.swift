@@ -10,9 +10,15 @@ import UIKit
 import Parse
 import Bolts
 
+import UIKit
+import MultipeerConnectivity
+
 import CoreLocation
 
-class DataTableViewController: UITableViewController, CLLocationManagerDelegate {
+class DataTableViewController: UITableViewController, CLLocationManagerDelegate, MPCManagerDelegate {
+    
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    var isAdvertising: Bool!
     
     let locationManager = CLLocationManager()
     
@@ -50,6 +56,12 @@ class DataTableViewController: UITableViewController, CLLocationManagerDelegate 
         self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.startUpdatingLocation()
+        
+        appDelegate.mpcManager.delegate = self
+        appDelegate.mpcManager.browser.startBrowsingForPeers()
+        appDelegate.mpcManager.advertiser.startAdvertisingPeer()
+        
+        isAdvertising = true
 
         // Get messages when loading view
         getMessagesNearby()
@@ -201,15 +213,55 @@ class DataTableViewController: UITableViewController, CLLocationManagerDelegate 
                         }
                     }
                 }
+
+                /*
+                *   Do something, if Peer is visible
+                */
+                
+                if(appDelegate.mpcManager.foundPeers.isEmpty) {
+                    
+                    cell.commentButton.enabled = false
+                }
+                
+                var z = 0
+                
+                while(z < appDelegate.mpcManager.foundPeers.count) {
+                   
+                    if(message.objectForKey("username") as? String == appDelegate.mpcManager.foundPeers[z].displayName) {
+                        
+                        cell.commentButton.enabled = true
+                    }
+                    
+                    else {
+                        cell.commentButton.enabled = false
+                    }
+                    
+                    z = z + 1
+                }
                 
                 /*
                  *  Comment for message
                 */
                 cell.onCommentButtonTapped = {
                     
-                    self.messageIdForComment = message.objectId as String!
+                    var i = 0
                     
-                    self.performSegueWithIdentifier("commentSegue", sender: self)
+                    while (i < self.appDelegate.mpcManager.foundPeers.count) {
+                        
+                        if(message.objectForKey("username") as? String == self.appDelegate.mpcManager.foundPeers[i].displayName) {
+                            let selectedPeer = self.appDelegate.mpcManager.foundPeers[i] as MCPeerID
+                            
+                            self.appDelegate.mpcManager.browser.invitePeer(selectedPeer, toSession: self.appDelegate.mpcManager.session, withContext: nil, timeout: 20)
+                            
+                            return
+                        }
+                        else {
+                            // DO nothing
+                            // Test
+                            // TODO
+                            i = i + 1
+                        }
+                    }
                 }
                 
                 /*
@@ -240,6 +292,15 @@ class DataTableViewController: UITableViewController, CLLocationManagerDelegate 
                     }
                     else {
                         cell.ClockLabel.text = "\(diffDateComponents.month) months ago"
+                    }
+                }
+                else if(diffDateComponents.day != 0) {
+                    
+                    if(diffDateComponents.hour == 1) {
+                        cell.ClockLabel.text = "\(diffDateComponents.day) day ago"
+                    }
+                    else {
+                        cell.ClockLabel.text = "\(diffDateComponents.day) days ago"
                     }
                 }
                 else if(diffDateComponents.hour != 0) {
@@ -288,14 +349,19 @@ class DataTableViewController: UITableViewController, CLLocationManagerDelegate 
         return cell
     }
 
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier == "commentSegue" {
-            let vc : CommentTableView = segue.destinationViewController as! CommentTableView
-            
-            vc.messageID = messageIdForComment
-            
-            commentObjects.removeAll()
+        if let destination = segue.destinationViewController as? CommentTableView,
+                                cell = sender as? NewsFeedCell,
+                                indexpath = tableView.indexPathForCell(cell) {
+                
+            var object = objects[indexpath.row]
+                                    
+            let commentID = object.objectId
+                                    
+            destination.messageID = commentID as String!
+
         }
     }
     
@@ -462,6 +528,56 @@ class DataTableViewController: UITableViewController, CLLocationManagerDelegate 
         
         return currentCity
     }
+    
+    
+    func foundPeer() {
+        // tblPeers.reloadData()
+    }
+    
+    
+    func lostPeer() {
+        // tblPeers.reloadData()
+    }
+    
+    
+    func invitationWasReceived(fromPeer: String) {
+        let alert = UIAlertController(title: "", message: "\(fromPeer) wants to chat with you.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        (tabBarController!.tabBar.items![2]).badgeValue = "1"
+        
+        let acceptAction: UIAlertAction = UIAlertAction(title: "Accept", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
+            self.appDelegate.mpcManager.invitationHandler(true, self.appDelegate.mpcManager.session)
+            
+            (self.tabBarController!.tabBar.items![2] ).badgeValue = nil
+        }
+        
+        let declineAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alertAction) -> Void in
+            
+            // TEST
+            // TODO
+            // MAYBE NEEDS TO BE CORRECTED or COMMENT OUT
+            // self.appDelegate.mpcManager.invitationHandler(false, self.appDelegate.mpcManager.session)
+            
+            (self.tabBarController!.tabBar.items![2] ).badgeValue = nil
+        }
+        
+        alert.addAction(acceptAction)
+        alert.addAction(declineAction)
+        
+        NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    
+    func connectedWithPeer(peerID: MCPeerID) {
+        NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+            self.performSegueWithIdentifier("segueForChat", sender: self)
+        }
+    }
+    
+    
 }
 
 extension UIView {

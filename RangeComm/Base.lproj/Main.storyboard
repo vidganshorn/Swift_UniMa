@@ -11,7 +11,7 @@
         <scene sceneID="2wE-Pi-865">
             <objects>
                 <tableViewController id="8Ax-TL-GgW" customClass="DataTableViewController" customModule="Jodel2" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="150" sectionHeaderHeight="28" sectionFooterHeight="28" id="XVT-5I-bBm">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="150" sectionHeaderHeight="28" sectionFooterHeight="28" id="XVT-5I-bBm">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -79,7 +79,7 @@
                                     <outlet property="locationLabel" destination="eWh-mw-zK4" id="BzZ-gt-8te"/>
                                     <outlet property="msgTLabel" destination="EJY-mj-OYb" id="Alq-mt-XsT"/>
                                     <outlet property="ratingLabel" destination="AFE-6q-i5C" id="pZQ-45-QRa"/>
-                                    <segue destination="PJ9-lw-0MQ" kind="push" identifier="commentSegue" id="7WW-sa-AK5"/>
+                                    <segue destination="PJ9-lw-0MQ" kind="push" identifier="commentSegue" id="WgM-dj-Jrp"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -99,10 +99,13 @@
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="nyi-5G-djm">
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
+                    <connections>
+                        <segue destination="f9i-Ei-h3C" kind="modal" identifier="segueForChat" id="Wj1-CT-Fs4"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fhU-39-YTY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="932" y="-961"/>
+            <point key="canvasLocation" x="1042" y="-961"/>
         </scene>
         <!--Comments-->
         <scene sceneID="fsO-fU-sWU">
@@ -160,7 +163,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BI0-hs-K5s" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="aZj-Hi-06k" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1379" y="-961"/>
+            <point key="canvasLocation" x="1545" y="-961"/>
         </scene>
         <!--Location-->
         <scene sceneID="hNz-n2-bh7">
@@ -253,7 +256,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="932" y="-273"/>
+            <point key="canvasLocation" x="838" y="-183"/>
         </scene>
         <!--Write Comment View Controller-->
         <scene sceneID="Rh2-le-5xq">
@@ -292,7 +295,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ch4-PH-92D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1379" y="-273"/>
+            <point key="canvasLocation" x="1585" y="-239"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -614,4 +617,7 @@
         <image name="news_feed_1x.png" width="22" height="22"/>
         <image name="second" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Wj1-CT-Fs4"/>
+    </inferredMetricsTieBreakers>
 </document>

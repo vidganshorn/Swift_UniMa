@@ -8,11 +8,17 @@
 
 import UIKit
 import CoreLocation
+
 import Parse
 import Bolts
 
+import MultipeerConnectivity
 
-class SecondViewController: UIViewController, CLLocationManagerDelegate, UITextViewDelegate {
+
+class SecondViewController: UIViewController, CLLocationManagerDelegate, UITextViewDelegate, MPCManagerDelegate {
+    
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    var isAdvertising: Bool!
     
     let locationManager = CLLocationManager()
     
@@ -25,6 +31,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UITextV
     @IBOutlet weak var sendMessageBarButton: UIBarButtonItem!
     
     @IBAction func sendMessage(sender: UIBarButtonItem) {
+        
         //Sending needs to happen
         //store text in variable
         let inputMsg = sended.text
@@ -41,6 +48,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UITextV
         let currentSending = Message()
         currentSending.deviceID = localDeviceID
         currentSending.text = inputMsg
+        currentSending.username = "Louai iPhone"
         
         
         //Date and time to be captured from the device?
@@ -82,6 +90,8 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UITextV
         
         message["text"] = currentSending.text!
         message["deviceID"] = currentSending.deviceID!
+        
+        message["username"] = "Louai iPhone"
         
         let point = PFGeoPoint(latitude:self.locationManager.location!.coordinate.latitude, longitude:self.locationManager.location!.coordinate.longitude)
         message["location"] = point
@@ -150,6 +160,10 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UITextV
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.startUpdatingLocation()
         cancelButtonOutlet.hidden = true
+        
+        appDelegate.mpcManager.delegate = self
+        appDelegate.mpcManager.browser.startBrowsingForPeers()
+        appDelegate.mpcManager.advertiser.startAdvertisingPeer()
     
     }
     
@@ -197,7 +211,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UITextV
         let currentSending = Message()
         currentSending.deviceID = localDeviceID
         currentSending.text = inputMsg
-        
+        currentSending.username = "Louai iPhone"
         
         //Date and time to be captured from the device?
         
@@ -241,6 +255,8 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UITextV
         
         message["text"] = currentSending.text!
         message["deviceID"] = currentSending.deviceID!
+        
+        message["username"] = "Louai iPhone"
         
         let point = PFGeoPoint(latitude:self.locationManager.location!.coordinate.latitude, longitude:self.locationManager.location!.coordinate.longitude)
         message["location"] = point
@@ -287,6 +303,53 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UITextV
     internal func getArray() -> [String]
     {
         return msgs
+    }
+    
+    func foundPeer() {
+        // tblPeers.reloadData()
+    }
+    
+    
+    func lostPeer() {
+        // tblPeers.reloadData()
+    }
+    
+    
+    func invitationWasReceived(fromPeer: String) {
+        let alert = UIAlertController(title: "", message: "\(fromPeer) wants to chat with you.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        (tabBarController!.tabBar.items![2]).badgeValue = "1"
+        
+        let acceptAction: UIAlertAction = UIAlertAction(title: "Accept", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
+            self.appDelegate.mpcManager.invitationHandler(true, self.appDelegate.mpcManager.session)
+            
+            (self.tabBarController!.tabBar.items![2] ).badgeValue = nil
+        }
+        
+        let declineAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alertAction) -> Void in
+            
+            // TEST
+            // TODO
+            // MAYBE NEEDS TO BE CORRECTED or COMMENT OUT
+            // self.appDelegate.mpcManager.invitationHandler(false, self.appDelegate.mpcManager.session)
+            
+            (self.tabBarController!.tabBar.items![2] ).badgeValue = nil
+        }
+        
+        alert.addAction(acceptAction)
+        alert.addAction(declineAction)
+        
+        NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    
+    func connectedWithPeer(peerID: MCPeerID) {
+        NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+            self.performSegueWithIdentifier("segueForChat", sender: self)
+        }
     }
  
 }
